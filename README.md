@@ -1,4 +1,4 @@
-# IFIS (*Interval-Valued Inference System based on Simpful*)
+# IFIS (*Interval-Valued Inference System*)
 The motivation for creating a library for the application of interval-valued fuzzy inference was the fact that methods for classifying uncertain data are important in many applications.
 
 The Interval-Valued Inference System (IFIS) is implemented in the Python 3 programming language. It is an extension of the Simpful library [1] and its dependencies are Numpy and Scipy. The latest version of IFIS currently supports the following features:
@@ -45,8 +45,6 @@ If you find IFIS useful for your research, please cite our work as follows:
 
 [1] Spolaor S., Fuchs C., Cazzaniga P., Kaymak U., Besozzi D., Nobile M.S.: Simpful: a user-friendly Python library for 
 fuzzy logic, International Journal of Computational Intelligence Systems, 13(1):1687–1698, 2020 [DOI:10.2991/ijcis.d.201012.002].
-
-[2] Grochowalski P.,  Kosior D., Gil D., Kozioł W., Pękala B., Dyczkowski K., Python library for interval-valued fuzzy inference, to appear.
 
 ## Illustrative examples
 In this section, we provide example of practical applications, together with their corresponding Python code, to demonstrate the potential and the use of IFIS. They involve the definition of a Mamdani and Takagi–Sugeno IFIS  for the tipping problem.
@@ -110,7 +108,4 @@ If you need further information, please write an e-mail to: pgrochowalski@ur.edu
 [1] Spolaor S., Fuchs C., Cazzaniga P., Kaymak U., Besozzi D., Nobile M.S.: Simpful: a user-friendly Python library 
 for fuzzy logic, International Journal of Computational Intelligence Systems, 13(1):1687–1698, 2020 
 [DOI:10.2991/ijcis.d.201012.002]
-
-[2] Grochowalski P.,  Kosior D., Gil D., Kozioł W., Pękala B., Dyczkowski K., Python library for interval-valued fuzzy 
-inference, to appear
 
