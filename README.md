@@ -1,7 +1,7 @@
-# IFIS (*Interval-Valued Inference System*)
+# IFIS (*Interval-Valued Fuzzy Inference System*)
 The motivation for creating a library for the application of interval-valued fuzzy inference was the fact that methods for classifying uncertain data are important in many applications.
 
-The Interval-Valued Inference System (IFIS) is implemented in the Python 3 programming language. It is an extension of the Simpful library [1] and its dependencies are Numpy and Scipy. The latest version of IFIS currently supports the following features:
+The Interval-Valued Fuzzy Inference System (IFIS) is implemented in the Python 3 programming language. It is an extension of the Simpful library [1] and its dependencies are Numpy and Scipy. The latest version of IFIS currently supports the following features:
 1. Definition of polygonal (e.g., vertex-based) and functional (e.g., sigmoidal, Gaussian, custom shaped) membership functions.
 2. Definition of interval-valued fuzzy rules as strings of text written in natural language.
 3. Definition of arbitrarily complex fuzzy rules built with the logic operators AND, OR (suitable interval-valued fuzzy operations built from minimum and maximum, respectively) or NOT (interval fuzzy negation), or arbitrary interval-valued aggregations.
@@ -47,7 +47,7 @@ If you find IFIS useful for your research, please cite our work as follows:
 fuzzy logic, International Journal of Computational Intelligence Systems, 13(1):1687–1698, 2020 [DOI:10.2991/ijcis.d.201012.002].
 
 ## Illustrative examples
-In this section, we provide example of practical applications, together with their corresponding Python code, to demonstrate the potential and the use of IFIS. They involve the definition of a Mamdani and Takagi–Sugeno IFIS  for the tipping problem.
+In this section, we provide example of practical applications, together with their corresponding Python code, to demonstrate the potential and the use of IFIS. They involve the definition of a Mamdani and Takagi–Sugeno IFIS for the tipping problem.
 
 ### Tipping problem
 The tipping problem consists in computing a fair tip (in terms of a percentage of the overall bill), taking into account a restaurant’s services. Listing 1 shows an example of IFIS code defining an interval inference system that calculates the amount of the tip on the basis of two input variables, describing food quality and service quality.
