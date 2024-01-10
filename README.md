@@ -58,9 +58,9 @@ An example implementation of an inference system based on the Takagi–Sugeno me
 
 ```
 from simpful import *
-from interval_simpful.interval_fuzzy_sets import *
-from interval_simpful.interval_fuzzy_system import *
-from interval_simpful.interval_linguistic_variable import *
+from ifis.interval_fuzzy_sets import *
+from ifis.interval_fuzzy_system import *
+from ifis.interval_linguistic_variable import *
 
 # A simple interval fuzzy inference system for the tipping problem
 # Create interval fuzzy system object
