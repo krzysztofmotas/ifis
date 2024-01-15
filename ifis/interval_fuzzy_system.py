@@ -2,15 +2,39 @@ import simpful as sf
 import re
 from simpful.fuzzy_sets import MF_object
 from numpy import array, linspace
-from ifis.interval_rule_parsing import interval_recursive_parse, interval_preparse, interval_postparse
+from .interval_rule_parsing import interval_recursive_parse, interval_preparse, interval_postparse
 from collections import defaultdict
 
+
 class IntervalFuzzySystem(sf.FuzzySystem):
+    """
+    Class which creates a new interval valued fuzzy system (IVFS).
+        :param type_system: change type of system able to check 1 and 2 (2 is for special case of intervals when lower
+            and upper bound of intervals is the same), default to 1
+        :type type_system: int
+        :param show_banner: toggles display of banner, default to True
+        :type show_banner: bool
+        :param sanitize_input: sanitize variables names to eliminate non-accepted characters (under development).
+        :param verbose: toggles verbose mode, default to False
+        :type verbose: bool
+        :param operators: specifying interval fuzzy operators to be used instead of defaults. Currently supported operators: 'AND_PRODUCT'.
+        :type operators: list
+    """
+
     def __init__(self, type_system=1, operators=None, show_banner=True, sanitize_input=False, verbose=True):
         super(IntervalFuzzySystem, self).__init__(operators, show_banner, sanitize_input, verbose)
         self._type_system = type_system
 
     def set_variable(self, name, value, verbose=False):
+        """
+        Sets the interval value of a linguistic variable.
+            :param name: name of the linguistic variables to be set
+            :type name: str
+            :param value: interval value to be set
+            :type value: tuple
+            :param verbose: toggles verbose mode, default to False
+            :type verbose: bool
+        """
         if type(value) is tuple:
             if self._sanitize_input: name = self._sanitize(name)
             try:
@@ -24,6 +48,13 @@ class IntervalFuzzySystem(sf.FuzzySystem):
             super().set_variable(name, value, verbose)
 
     def add_rules(self, rules, verbose=False):
+        """
+        Adds new interval valued fuzzy rules (IVFR) to the IVFS.
+            :param rules: list of interval valued fuzzy rules to be added. Rules must be specified as strings
+            :type rules: list of str
+            :param verbose: toggles verbose mode
+            :type verbose: bool
+        """
         for rule in rules:
 
             # optional: remove invalid symbols
@@ -39,6 +70,9 @@ class IntervalFuzzySystem(sf.FuzzySystem):
         if verbose: print(" * %d rules successfully added" % len(rules))
 
     def mediate_interval(self, outputs, antecedent, results, ignore_errors=False, ignore_warnings=False, verbose=False):
+        """
+        Function calculate Sugeno method of IVFS.
+        """
         final_result = {}
 
         list_crisp_values = [x[0] for x in self._crispvalues.items()]
@@ -75,7 +109,7 @@ class IntervalFuzzySystem(sf.FuzzySystem):
                     elif isinstance(self._outputfunctions[outterm], MF_object):
                         raise Exception(
                             "ERROR in consequent of rule %s.\nSugeno reasoning does not support output fuzzy sets." % (
-                                        "IF " + str(ant) + " THEN " + str(res)))
+                                    "IF " + str(ant) + " THEN " + str(res)))
                     else:
                         if self._type_system == 1:
                             string_to_evaluate = self._outputfunctions[outterm]
@@ -158,8 +192,11 @@ class IntervalFuzzySystem(sf.FuzzySystem):
 
         return final_result
 
-    def mediate_interval_Mamdani(self, outputs, antecedent, results, ignore_errors=False, ignore_warnings=False, verbose=False,
-                        subdivisions=1000):
+    def mediate_interval_Mamdani(self, outputs, antecedent, results, ignore_errors=False, ignore_warnings=False,
+                                 verbose=False, subdivisions=1000):
+        """
+        Function calculate Mamdani method of IVFS.
+        """
         final_result = {}
 
         for output in outputs:
@@ -240,7 +277,7 @@ class IntervalFuzzySystem(sf.FuzzySystem):
                     if not ignore_warnings:
                         print(
                             "WARNING: the sum of rules' firing for variable '%s' is equal to 0. The result of the Mamdani inference was set to 0." % output)
-                #else:
+                # else:
                 #   CoG = sumwv_start / sumv_start, sumwv_stop / sumv_stop
                 else:
                     interval_start = sumwv_start / sumv_start
@@ -258,12 +295,26 @@ class IntervalFuzzySystem(sf.FuzzySystem):
                     raise Exception(
                         "ERROR: cannot perform Mamdani inference for variable '%s'. The variable appears only as antecedent in the rules or an arithmetic error occurred." % output)
 
-            if verbose: print(" * Weighted values: %.2f\tValues: %.2f\tCoG: %.2f" % ((sumwv_start, sumv_start), (sumwv_stop, sumv_stop) , CoG))
+            if verbose: print(" * Weighted values: %.2f\tValues: %.2f\tCoG: %.2f" % (
+                (sumwv_start, sumv_start), (sumwv_stop, sumv_stop), CoG))
             final_result[output] = CoG
 
         return final_result
 
     def Sugeno_interval_inference(self, terms=None, ignore_errors=False, ignore_warnings=False, verbose=False):
+        """
+        Performs Sugeno interval fuzzy inference.
+            :param terms: names of the variables on which inference must be performed
+                If empty, all variables appearing in the consequent of a IVFR are inferred.
+            :type terms: list
+            :param ignore_errors: toggles the raising of errors during the inference.
+            :type ignore_errors: bool
+            :param ignore_warnings: toggles the raising of warnings during the inference.
+            :type ignore_warnings: bool
+            :param verbose: toggles verbose mode.
+            :type verbose: bool
+            :return: a dictionary, containing as keys the variables names and as values their interval inferred values
+        """
         if self._sanitize and terms is not None:
             terms = [self._sanitize(term) for term in terms]
             # default: inference on ALL rules/terms
@@ -281,12 +332,12 @@ class IntervalFuzzySystem(sf.FuzzySystem):
         array_rules = array(self._rules, dtype='object')
         if len(self._constants) == 0:
             result = self.mediate_interval(terms, array_rules.T[0], array_rules.T[1], ignore_errors=ignore_errors,
-                                  ignore_warnings=ignore_warnings, verbose=verbose)
+                                           ignore_warnings=ignore_warnings, verbose=verbose)
         else:
             # remove constant variables from list of variables to infer
             ncost_terms = [t for t in terms if t not in self._constants]
             result = self.mediate_interval(ncost_terms, array_rules.T[0], array_rules.T[1], ignore_errors=ignore_errors,
-                                  ignore_warnings=ignore_warnings, verbose=verbose)
+                                           ignore_warnings=ignore_warnings, verbose=verbose)
             # add values of constant variables
             cost_terms = [t for t in terms if t in self._constants]
             for name in cost_terms:
@@ -295,7 +346,23 @@ class IntervalFuzzySystem(sf.FuzzySystem):
         return result
 
     def Mamdani_interval_inference(self, terms=None, subdivisions=1000, ignore_errors=False, ignore_warnings=False,
-                          verbose=False):
+                                   verbose=False):
+        """
+        Performs Mamdani interval fuzzy inference.
+            :param terms: names of the variables on which inference must be performed
+                If empty, all variables appearing in the consequent of a IVFR are inferred.
+            :type terms: list
+            :param subdivisions: the number of integration steps to be performed for calculating fuzzy set area,
+                defaults to 1000.
+            :type subdivisions: int
+            :param ignore_errors: toggles the raising of errors during the inference
+            :type ignore_errors: bool
+            :param ignore_warnings: toggles the raising of warnings during the inference
+            :type ignore_warnings: bool
+            :param verbose: toggles verbose mode
+            :type verbose: bool
+            :return: a dictionary, containing as keys the variables names and as values their interval inferred values
+        """
         if self._sanitize and terms is not None:
             terms = [self._sanitize(term) for term in terms]
 
@@ -312,13 +379,17 @@ class IntervalFuzzySystem(sf.FuzzySystem):
 
         array_rules = array(self._rules, dtype=object)
         if len(self._constants) == 0:
-            result = self.mediate_interval_Mamdani(terms, array_rules.T[0], array_rules.T[1], ignore_errors=ignore_errors,
-                                          ignore_warnings=ignore_warnings, verbose=verbose, subdivisions=subdivisions)
+            result = self.mediate_interval_Mamdani(terms, array_rules.T[0], array_rules.T[1],
+                                                   ignore_errors=ignore_errors,
+                                                   ignore_warnings=ignore_warnings, verbose=verbose,
+                                                   subdivisions=subdivisions)
         else:
             # remove constant variables from list of variables to infer
             ncost_terms = [t for t in terms if t not in self._constants]
-            result = self.mediate_interval_Mamdani(ncost_terms, array_rules.T[0], array_rules.T[1], ignore_errors=ignore_errors,
-                                          ignore_warnings=ignore_warnings, verbose=verbose, subdivisions=subdivisions)
+            result = self.mediate_interval_Mamdani(ncost_terms, array_rules.T[0], array_rules.T[1],
+                                                   ignore_errors=ignore_errors,
+                                                   ignore_warnings=ignore_warnings, verbose=verbose,
+                                                   subdivisions=subdivisions)
             # add values of constant variables
             cost_terms = [t for t in terms if t in self._constants]
             for name in cost_terms:

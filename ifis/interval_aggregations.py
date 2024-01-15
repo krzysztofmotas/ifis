@@ -1,13 +1,19 @@
 import numpy as np
 import simpful as sf
 from simpful import Triangular_MF, Trapezoidal_MF
+# from .interval_fuzzy_sets import IntervalFuzzySet
 
-from ifis.interval_fuzzy_sets import IntervalFuzzySet
-
-
+"""
+Module with various implementations of aggregation functions
+"""
 def aMeanPower(memberships):
     """
-    Source: http://student.bluu.pl/ur/aggregations/AMeanPower.PNG
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'MeanPower'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: lower and upper bound of interval after aggregation
+        :rtype: list
     """
     if memberships.__len__() < 2:
         raise Exception(
@@ -21,7 +27,16 @@ def aMeanPower(memberships):
         return aMeanPower(memberships2)
 
 
+
 def aMeanMax(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'MeanMax'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -30,6 +45,14 @@ def aMeanMax(memberships):
 
 
 def aProdMean(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'ProdMean'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -38,6 +61,14 @@ def aProdMean(memberships):
 
 
 def aMinMax(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'MinMax'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -46,6 +77,15 @@ def aMinMax(memberships):
 
 
 def aMax(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'Max'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+    and comparability relations: possible and necessary
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -54,6 +94,15 @@ def aMax(memberships):
 
 
 def aMin(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'Min'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+    and comparability relations: possible and necessary
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -62,6 +111,15 @@ def aMin(memberships):
 
 
 def aGMean(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'GeometricMean'
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+    and comparability relations: possible and necessary
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -70,6 +128,17 @@ def aGMean(memberships):
 
 
 def aAlpha(memberships, alpha=0.5):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation alpha
+    If param alpha equals 0.5 we get Mean aggregation
+    This aggregation respect orders: Lexicographical 1, Lexicographical 2 and Xu Yager
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :param alpha: parameter to builds aggregation, default to 0.5
+        :type alpha: float
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -83,6 +152,13 @@ def aAlpha(memberships, alpha=0.5):
 
 
 def aW(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'W'
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -104,6 +180,14 @@ def aW(memberships):
 
 
 def aA1(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'A1'
+    This aggregation respect comparability relation: possible
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -129,6 +213,14 @@ def aA1(memberships):
 
 
 def aA2(memberships):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'A2'
+    This aggregation respect comparability relation: possible
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -154,6 +246,17 @@ def aA2(memberships):
 
 
 def aA3(memberships, inside_aggregation="g"):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'A3'
+    This aggregation respect comparability relation: possible
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :param inside_aggregation: aggregation inside this aggregation function, able to use aggregations are
+            geometric mean(g) and power mean(p), default to 'g'(geometric mean)
+        :type inside_aggregation: str
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -172,6 +275,17 @@ def aA3(memberships, inside_aggregation="g"):
 
 
 def aA4(memberships, inside_aggregation="g"):
+    """
+    Function to aggregate memberships of each linguistic variable terms by aggregation 'A3'
+    This aggregation respect comparability relation: possible
+        :param memberships: list memberships of each linguistic variable terms
+        :type memberships: list
+        :param inside_aggregation: aggregation inside this aggregation function, able to use aggregations are
+            geometric mean(g) and power mean(p), default to 'g'(geometric mean)
+        :type inside_aggregation: str
+        :return: list which contains lower and upper bound of interval after aggregation
+        :rtype: list
+    """
     if memberships.__len__() < 2:
         raise Exception(
             "ERROR: You can aggregate 2 or more intervals.")
@@ -193,12 +307,20 @@ class IntervalFuzzyAggregator(sf.FuzzyAggregator):
     """
     Creates a new interval fuzzy aggregation object based on the FuzzyAggregator object from the Simpful library.
     Aggregations available: A_Prod, A_MeanPower, A_Mean.
+        :param verbose: toggles verbose mode, default to FALSE
+        :type verbose: bool
     """
 
     def __init__(self, verbose=False):
         super().__init__(verbose=verbose)
 
     def add_variables(self, *args):
+        """
+        Adds variables and their IVFS to perform fuzzy aggregation.
+            :param args: ''ifis.interval_fuzzy_sets.IntervalFuzzySet'' objects, whose 'term' argument is the name of
+                the variable.
+            :type args: IVFS objects
+        """
         for v in args:
             if isinstance(v, IntervalFuzzySet):
                 self._variables[v._term] = v
@@ -209,6 +331,13 @@ class IntervalFuzzyAggregator(sf.FuzzyAggregator):
         print("\033[2;38m")
 
     def set_variable(self, name, value):
+        """
+        Sets the interval value of a variable to be aggregated.
+            :param name: name of the variables to be set
+            :type name: str
+            :param value: interval value to be set
+            :type value: list
+        """
         try:
             value = float(value)
             self._values[name] = value
@@ -218,6 +347,17 @@ class IntervalFuzzyAggregator(sf.FuzzyAggregator):
             raise Exception("ERROR: value for " + name + " is not integer or float: " + value)
 
     def aggregate(self, variables=None, aggregation_fun="product", aggregation_param=None):
+        """
+        The method aggregates the terms of linguistic variables according to their affiliation and membership functions
+            :param aggregation_fun: name of the aggregation we want to use (A_MeanPower, A_GMean, A_MeanMax, A_ProdMean,
+                A_MinMax, A_Min, A_Max, A_W, A_1, A_2, A_3, A_4, A_Alpha, A_Mean  are available)
+            :type aggregation_fun: str
+            :param aggregation_param: an optional parameter that is used in a specific aggregation that contains another
+                aggregation inside
+            :type aggregation_param: str, int
+            :return:
+            :rtype: list
+        """
         # In development
 
         if variables == None:
@@ -372,7 +512,7 @@ if __name__ == '__main__':
     print("\033[2;38m")
 
     # Aggregation of three intervals
-    result = ivA.aggregate(["test1", "test2", "test3"], aggregation_fun="A_MeanMax")
+    result = ivA.aggregate(["test1", "test2", "test3"], aggregation_fun="A_MeanPower")
     print("\033[2;34mResult:", result, end="\n\n")
     print("\033[2;38m")
 

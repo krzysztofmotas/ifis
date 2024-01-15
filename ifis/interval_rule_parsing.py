@@ -9,6 +9,10 @@ regex_clause = re.compile(r"^[a-z,_,A-Z,0-9]*\s*IS\s*[a-z,_,A-Z,0-9]*$")
 
 
 class IntervalClause(sf.Clause):
+    """
+    Class representing Interval Clause.
+    """
+
     def evaluate_interval(self, IntervalFuzzySystem, verbose=False, operators=None):
         try:
             ans = IntervalFuzzySystem._lvs[self._variable].get_values(IntervalFuzzySystem._variables[self._variable])
@@ -33,6 +37,10 @@ class IntervalClause(sf.Clause):
 
 
 class IntervalFunctional(sf.Functional):
+    """
+    Class representing Interval Functional.
+    """
+
     def evaluate_interval(self, IntervalFuzzySystem):
         if self._A == "":
             # support for unary operators
@@ -62,6 +70,15 @@ class IntervalFunctional(sf.Functional):
 
 # basic definitions of
 def OR(x, y):
+    """
+    Definition of basic OR aggregator in rules
+        :param x: first aggregated value
+        :type x: tuple, float
+        :param y: second aggregated value
+        :type y: tuple, float
+        :return: aggregated value
+        :rtype: tuple, float
+    """
     if type(x) is tuple and type(y) is tuple:
         return max(x[0], y[0]), max(x[1], y[1])
     else:
@@ -69,9 +86,18 @@ def OR(x, y):
 
 
 def AND(x, y):
+    """
+    Definition of basic AND aggregator in rules as Mean aggregation in case intervals and min function when input data are floats
+        :param x: first aggregated value
+        :type x: tuple, float
+        :param y: second aggregated value
+        :type y: tuple, float
+        :return: aggregated value
+        :rtype: tuple, float
+    """
     if type(x) is tuple and type(y) is tuple:
         # return min(x[0], y[0]), min(x[1], y[1])
-        return (x[0] + y[0])/2.0, (x[1] + y[1])/2.0
+        return (x[0] + y[0]) / 2.0, (x[1] + y[1]) / 2.0
         # return pow(x[0] * y[0], 0.5), pow(x[1] * y[1], 0.5)
         # return x[0] * y[0], x[1] * y[1]
     else:
@@ -80,7 +106,18 @@ def AND(x, y):
         # return pow(x * y, 0.5)
         # return x * y
 
+
 def AND_p(x, y):
+    """
+    Definition of basic AND aggregator in rules as Product aggregation in case intervals and product function when input data are floats
+        :param x: first aggregated value
+        :type x: tuple, float
+        :param y: second aggregated value
+        :type y: tuple, float
+        :return: aggregated value
+        :rtype: tuple, float
+
+    """
     if type(x) is tuple and type(y) is tuple:
         return x[0] * y[0], x[1] * y[1]
     else:
@@ -88,6 +125,13 @@ def AND_p(x, y):
 
 
 def NOT(x):
+    """
+    Negation operator in rules
+        :param x: value to negation
+        :type x: tuple, float
+        :return: value after negation
+        :rtype: tuple, float
+    """
     if type(x) is tuple:
         return 1. - x[1], 1. - x[0]
     else:
@@ -95,11 +139,25 @@ def NOT(x):
 
 
 def interval_preparse(STRINGA):
+    """
+    Function extract the antecedent
+        :param STRINGA: text of rule
+        :type STRINGA: str
+        :return: antecedent part from rule
+        :rtype: str
+    """
     # extract the antecedent
     return STRINGA[STRINGA.find("IF") + 2:STRINGA.find(" THEN")].strip()
 
 
 def interval_postparse(STRINGA, verbose=False):
+    """
+    Function extract the successor
+        :param STRINGA: text of rule
+        :type STRINGA: str
+        :return: successor part from rule
+        :rtype: str
+    """
     stripped = STRINGA[STRINGA.find(" THEN") + 5:].strip("() ")
     if STRINGA.find("THEN") == -1:
         raise Exception("ERROR: badly formatted rule, please check capitalization and syntax.\n"
@@ -112,6 +170,15 @@ def interval_postparse(STRINGA, verbose=False):
 
 
 def interval_find_index_operator(string, verbose=False):
+    """
+    Function finding indexes of operators in string
+        :param string: rule/part of rule
+        :type string: str
+        :param verbose: toggles verbose mode, default to True<
+        :type verbose: bool
+        :return: start and end indexes of the found operator
+        :rtype: tuple
+    """
     if verbose: print(" * Looking for an operator in", string)
     pos = 0
     par = 1
@@ -129,6 +196,19 @@ def interval_find_index_operator(string, verbose=False):
 
 
 def interval_recursive_parse(text, verbose=False, operators=None, allow_empty=True):
+    """
+    Function for parse rules using recursive and extract each of the clauses from rule
+        :param text: rule / part of rule
+        :type text: str
+        :param verbose: toggles verbose mode, default to False
+        :type verbose: bool
+        :param operators: recognized in previous calling of function aggregation operator, default to None
+        :type operators: str
+        :param allow_empty: toggles allow empty clause, default to True
+        :type allow_empty: bool
+        :return: recognized part of function with aggregators
+        :rtype: IntervalFunctional
+    """
     # remove useless spaces around text
     text = text.strip()
 
