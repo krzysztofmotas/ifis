@@ -21,9 +21,22 @@ class IntervalFuzzySystem(sf.FuzzySystem):
         :type operators: list
     """
 
-    def __init__(self, type_system=1, operators=None, show_banner=True, sanitize_input=False, verbose=True):
+    def __init__(self, type_system=1, operators=None, show_banner=False, show_banner_ifis=True, sanitize_input=False, verbose=True):
         super(IntervalFuzzySystem, self).__init__(operators, show_banner, sanitize_input, verbose)
         self._type_system = type_system
+        if show_banner_ifis:
+            self._banner()
+
+    def _banner(self):
+        import pkg_resources
+        vrs = pkg_resources.get_distribution('simpful').version
+        print(" IFIS (Interval-Valued Fuzzy Inference System) ")
+        print(" Created by Piotr Grochowalski (pgrochowalski@ur.edu.pl)")
+        print()
+        print(" Simpful v%s " % vrs)
+        print(" Created by Marco S. Nobile (m.s.nobile@tue.nl)")
+        print(" and Simone Spolaor (simone.spolaor@unimib.it)")
+        print()
 
     def set_variable(self, name, value, verbose=False):
         """
