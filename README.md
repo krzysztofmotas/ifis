@@ -9,6 +9,8 @@ The Interval-Valued Fuzzy Inference System (IFIS) is implemented in the Python 3
 
 Given values for the antecedents as input, IFIS can perform interval-valued fuzzy inference and provide the final output values.
 
+For more information check our [online documentation](https://pgrochowalski.github.io/ifis/).
+
 The elements of our system are described below:
 
 I. *Preparation of data – 2-fuzzification*. Defining the interval fuzzy sets that will subsequently be linked with linguistic variables
