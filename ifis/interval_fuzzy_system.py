@@ -30,7 +30,7 @@ class IntervalFuzzySystem(sf.FuzzySystem):
     def _banner(self):
         import pkg_resources
         vrs = pkg_resources.get_distribution('simpful').version
-        print(" IFIS (Interval-Valued Fuzzy Inference System) ")
+        print(" IFIS (Interval-Valued Fuzzy Inference System) v. 1.0.0")
         print(" Created by Piotr Grochowalski (pgrochowalski@ur.edu.pl)")
         print()
         print(" Simpful v%s " % vrs)

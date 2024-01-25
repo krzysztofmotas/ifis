@@ -1,7 +1,7 @@
 import numpy as np
 import simpful as sf
 from simpful import Triangular_MF, Trapezoidal_MF
-# from .interval_fuzzy_sets import IntervalFuzzySet
+from .interval_fuzzy_sets import IntervalFuzzySet
 
 """
 Module with various implementations of aggregation functions

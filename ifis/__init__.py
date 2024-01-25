@@ -1,5 +1,5 @@
 from simpful import *
-from .interval_aggregations import IntervalFuzzySet, IntervalFuzzyAggregator, aMin, aMinMax, aMeanMax, aMax, \
+from .interval_aggregations import IntervalFuzzyAggregator, aMin, aMinMax, aMeanMax, aMax, \
     aProdMean, aGMean, aMeanPower, aW, aA1, aA2, aA3, aA4, aAlpha
 from .interval_fuzzy_sets import IntervalFuzzySet, Triangular_MF_2, Trapezoidal_MF_2, MF_object_2
 from .interval_linguistic_variable import IntervalLinguisticVariable, plot, subplots, show, title, legend, linspace
