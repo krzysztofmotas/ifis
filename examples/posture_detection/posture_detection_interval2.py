@@ -1,15 +1,15 @@
-from interval_simpful.interval_fuzzy_sets import *
-from interval_simpful.interval_fuzzy_system import *
-from interval_simpful.interval_linguistic_variable import *
+from ifis.interval_fuzzy_sets import *
+from ifis.interval_fuzzy_system import *
+from ifis.interval_linguistic_variable import *
 
 import fuzzyfication as fz
-from examples.data_posture_detection.import_data import *
+from examples.posture_detection.import_data import *
 
 # reading data
-data_dict1 = ImportData.read_raw_data_pickle_file("../data_posture_detection/features2D.pickle", False, 'HeightWidthRatio')
-data_dict2 = ImportData.read_raw_data_pickle_file("../data_posture_detection/features3D.pickle", False, "P40", "HHmaxRatio",
+data_dict1 = ImportData.read_raw_data_pickle_file("data/features2D.pickle", False, 'HeightWidthRatio')
+data_dict2 = ImportData.read_raw_data_pickle_file("data/features3D.pickle", False, "P40", "HHmaxRatio",
                                                   "MaxStdXZ")
-data_dict3 = ImportData.read_raw_data_pickle_file("../data_posture_detection/classes.pickle", False, "class")
+data_dict3 = ImportData.read_raw_data_pickle_file("data/classes.pickle", False, "class")
 
 data_array = ImportData.convert_data_dict2table(data_dict2[1], data_dict1[1], data_dict3[1])
 
