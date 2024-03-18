@@ -95,6 +95,13 @@ def AND(x, y):
         :return: aggregated value
         :rtype: tuple, float
     """
+
+    if type(x) is list:
+        x = tuple(x)
+
+    if type(y) is list:
+        y = tuple(y)
+
     if type(x) is tuple and type(y) is tuple:
         # return min(x[0], y[0]), min(x[1], y[1])
         return (x[0] + y[0]) / 2.0, (x[1] + y[1]) / 2.0
