@@ -91,9 +91,9 @@ def AND(x, y):
         :param x: first aggregated value
         :type x: tuple, float, list
         :param y: second aggregated value
-        :type y: tuple, float
+        :type y: tuple, float, list
         :return: aggregated value
-        :rtype: tuple, float, list
+        :rtype: tuple, float
     """
 
     if type(x) is list:
