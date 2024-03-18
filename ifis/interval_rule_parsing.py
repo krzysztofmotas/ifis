@@ -89,11 +89,11 @@ def AND(x, y):
     """
     Definition of basic AND aggregator in rules as Mean aggregation in case intervals and min function when input data are floats
         :param x: first aggregated value
-        :type x: tuple, float
+        :type x: tuple, float, list
         :param y: second aggregated value
         :type y: tuple, float
         :return: aggregated value
-        :rtype: tuple, float
+        :rtype: tuple, float, list
     """
 
     if type(x) is list:
